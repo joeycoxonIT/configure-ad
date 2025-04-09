@@ -179,3 +179,104 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <p>
 <img src="https://i.imgur.com/7yTArsn.png" height="60%" width="60%" alt="Disk Sanitization Steps"/>
 </p>
+<br />
+
+<h3>10) Install Active Directory</h3>
+
+<p>
+
+- In your "dc-1" virtual machine, open "Server Manager Application"
+- Click "Add Roles and Features"
+- Click "Next" until you see "Server Roles"
+- Make sure "Active Directory Domain Services" is checked, then click "Add Features"
+- Continue to click "Next" until you're at the "Confirmation" page
+- Make sure the box that says "Restart the destination server automatically if required" is checked, then click "Install"
+</p>
+<p>
+<img src="https://i.imgur.com/1Y0uvdN.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>11) Promote DC-1 to a Domain Controller</h3>
+
+<p>
+
+- In your Server Manager, click the flag icon at the top right of the page, then click "Promote this server to a domain controller"
+- Select "Add a new Forest" and enter a domain name under "Root domain name". For this tutorial, we will name it "mydomain.com".
+- Click Next, then create a password
+- Contiunue to click "Next" until you see "DNS options". Make sure "Create DNS delegation" is unchecked
+- Continue to click "Next" until you're at the Prerequisites page. Wait for the prerequisites to be verified, then click "Install".
+- Log out of your "dc-1" virtual machine and log back into it as "mydomain.com/(username)"
+</p>
+<p>
+<img src="https://i.imgur.com/nxrRtSD.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/aK066DJ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+
+<h3>12) Create a Domain Admin user within the domain</h3>
+
+<p>
+
+- In your "dc-1" VM, go to the search bar at the bottom of the screen and search for "Active Directory Users and Computers". Open it once you see it.
+- Right click "mydomain.com" then click "New" -> "Organizational Unit"
+- Name the organizational unit "_EMPLOYEES" then click "OK"
+- Create another organizational unit and name it "_ADMINS"
+- To create a new admin, right click on the "_ADMINS" folder then click "New -> "User"
+- Enter the credentials for the new user. For this tutorial, we will name them "Jane Doe". Once that's done, click "Finish"
+- Next we will add Jane Doe to the "Domain Admins" Security Group. Right click on Jane Doe and click "Properties" -> "Member of"
+- In the "Member of" tab, click "Add"
+- Type "domain admins" in the empty field, then click "Check Names" to confirm that you found the correct name. Then Click "Apply" and "OK".
+- Log out of your "dc-1" VM, then log back in as "Jane Doe" (mydomain.com\jane_admin). From now on, this will be used as the admin account.
+</p>
+<p>
+<img src="https://i.imgur.com/y5V6Hbx.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/HTy2ZA0.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/7vGHRlG.png" height="60%" width="60%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/EvS2fRA.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/023fN8q.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/3wDmYl0.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>13) Join Client 1 to the Domain</h3>
+
+<p>
+
+- Log into the "client-1" virtual machine as the original local admin (labuser)
+- Right click the Windows start button in the bottom left of the screen, then open "System"
+- Click "Rename this PC advanced" at the right of the page
+- In the "Computer Name" tab click "Change"
+- Under "Member of" select "Domain" and type "mydomain.com" in the field. Then click "OK".
+- Enter the username and password with the "Jane Doe" information. Then click "OK".
+- If done correctly, you will see the following window pop up.
+- Click "OK" and your VM will restart
+- Within your "dc-1" virtual machine, go to the search bar at the bottom of of the screen and search for and open "Active Directory Users and Computers"
+- Open the "Computers" folder to verify that "client-1" is there
+</p>
+<p>
+<img src="https://i.imgur.com/32uw3ue.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/q1Xofv7.png" height="40%" width="40%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/hG13380.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/VL5QJNw.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/3rOP6q9.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
