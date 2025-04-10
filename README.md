@@ -282,9 +282,71 @@ This tutorial outlines the implementation of on-premises Active Directory within
 </p>
 <br />
 
-<h3>14) Use Powershell to Create Users</h3>
+<h3>14) Setup Remote Desktop for non-administrative users on Client 1</h3>
 
 <p>
 
-- 
+- Log into your "client-1" virtual machine as "Jane Doe" (mydomain.com\jane_admin)
+- Right click the Start menu at the bottom left of the screen in your "client-1" virtual machine, then click "System"
+- Once you're at the "System" page, click "Remote desktop"
+- Under "User accounts", click "Select users that can remotely access this PC.
 </p>
+<p>
+<img src="https://i.imgur.com/pwonAmX.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Once a tab called "Remote Desktop Users" opens, click "Add"
+- In the empty field, type "domain users" to allow all domain users to log into the virtual machine. Then click "OK".
+</p>
+<p>
+<img src="https://i.imgur.com/jqMXoXf.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>15) Create Additional Users in DC-1 VM</h3>
+<p>
+
+- Log into your "dc-1" virtual machine as "Jane Doe"
+- In the search bar at the bottom of the screen, search for and open "Windows Powershell ISE". Right click it and run it as an administrator
+- Create a new File (click "File" -> "New" at the top left of the page) and copy and paste the contents of this script: "https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1" into it.
+- Save the file. For this tutorial, we will save it to our Desktop and name it "create-users"
+</p>
+<p>
+<img src="https://i.imgur.com/z0kadKU.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Run the script by clicking the green play button at the top of the page
+</p>
+<p>
+<img src="https://i.imgur.com/mzlL4oE.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Observe the users being created
+</p>
+<p>
+<img src="https://i.imgur.com/QhLPpKv.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>16) Verify that users in Active Directory have successfully been created</h3>
+<p>
+
+- Open Active Directory Users and Computers
+- Click the "_EMPLOYEES" folder to verify that users have been created
+</p>
+<p>
+<img src="https://i.imgur.com/ZrEHcee.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>17) Log into Client 1 as one of the newly created users</h3>
+<p>
+
+- Choose any newly created user from the _EMPLOYEES folder in Active Directory and use it to log into your "client-1" virutal machine
+  - The format of the username should be the same as your admin user (Example: mydomain.com\bot.jep)
+  - NOTE: The password can be found at the top of the script. It is the same for all users
+</p>
+<br />
