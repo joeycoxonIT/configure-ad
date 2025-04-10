@@ -280,3 +280,11 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <p>
 <img src="https://i.imgur.com/3rOP6q9.png" height="70%" width="70%" alt="Disk Sanitization Steps"/>
 </p>
+<br />
+
+<h3>14) Use Powershell to Create Users</h3>
+
+<p>
+
+- 
+</p>
