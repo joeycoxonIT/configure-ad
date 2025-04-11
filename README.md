@@ -350,3 +350,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
   - NOTE: The password can be found at the top of the script. It is the same for all users
 </p>
 <br />
+
+<h3>18) Configuring Account Lockout Policy</h3>
+<p>
+
+- Log in to your "dc-1" virtual machine
+- Log into
+</p>
