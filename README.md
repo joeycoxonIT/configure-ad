@@ -347,13 +347,128 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 - Choose any newly created user from the _EMPLOYEES folder in Active Directory and use it to log into your "client-1" virutal machine
   - The format of the username should be the same as your admin user (Example: mydomain.com\bot.jep)
-  - NOTE: The password can be found at the top of the script. It is the same for all users
+  - NOTE: The password can be found at the top of the script. It is the same for all users.
 </p>
 <br />
 
 <h3>18) Configuring Account Lockout Policy</h3>
+
+<h4>Scenario:</h4>
+<p>
+In some cases, unauthorized users will have access to accounts that they shouldn't. To prevent this, organizations will often create a lockout policy to ensure that only authorized users have access these accounts. This policy is often implemented by locking a user out of their account after a certain number of login attempts 
+</p>
 <p>
 
+
 - Log in to your "dc-1" virtual machine
-- Log into
+- Right click the Start menu. Click "Run", type "gpmc.msc" to open "Group Policy Management", then click "OK".
 </p>
+<p>
+<img src="https://i.imgur.com/msRKYUY.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Now that you opened "Group Policy Management", Expand "Forest: mydomain.com" -> "Domains" -> "mydomain.com" until you see "Default Domains Policy".
+- Right-click "Default Domains Policy" and click "Edit"
+</p>
+<p>
+<img src="https://i.imgur.com/6bt7AKq.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Once you're at the editor, expand "Policies" -> "Windows Settings" -> "Security Settings" -> "Account Policies". Then click "Account Lockout Policy"
+</p>
+<p>
+<img src="https://i.imgur.com/E8YUbPy.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- You will see three primary settings: "Account lockout duration", "Account lockout threshold", and "Reset lockout account after"
+  - Click "Account lockout duration". For this tutorial, we will set the duration to "30 minutes". Once it's set, click "Apply" then "OK".
+  - Click "Account lockout threshold". Set the "invalid logon attempts" to "5". Click "Apply" then "OK".
+  - Click "Reset account lockout counter after". Set it to "30 minutes". Click "Apply" then "OK"
+    - NOTE: Make sure for all of these that "Define this policy setting" is checked.
+</p>
+<p>
+<img src="https://i.imgur.com/Cd1PpYB.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/YRUuDkZ.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="https://i.imgur.com/23rQgbU.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<br />
+
+<h3>19) Dealing with Locked User Accounts</h3>
+
+<h4>Scenario:</h4>
+<p>
+A user is locked out of their account due to too many failed login attempts. The user seeks help from the domain user to unlock their account.
+</p>
+<br />
+
+<p>
+  
+- Simulate an account lockout by attempting to login as one of the users you created earlier with a wrong password more than five times. If done correctly, the notification below will pop up.
+</p>
+<p>
+<img src="https://i.imgur.com/EGTK4ja.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Now go back into your "dc-1" virtual machine. Open "Active Directory Users and Computers"
+- Right click "mydomain.com" and select "Find"
+- In the empty field under "Name", type in the username of the account that was locked out. Then click "Find now"
+- Now that you're at the "Properties" page for this account, click the "Account" tab. Make sure "Unlock account" is checked. Then click "Apply" and "OK".
+</p>
+<p>
+<img src="https://i.imgur.com/CJPdY3y.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Now attempt to log into your "client-1" virtual machine with the account you just unlocked to verify that the above steps worked.
+</p>
+<br />
+
+<h3>20) Enabling and Disabling Accounts</h3>
+
+<h4>Scenario:</h4>
+<p>
+A user believes that their account information has been leaked and an unauthorized user has access to it. The user seeks help from the domain administrator to disable the account.
+</p>
+<br />
+
+<p>
+
+- Login to your "dc-1" virtual machine as "jane_admin"
+- Open "Active Directory Users and Computers"
+- Right-click "mydomain.com" and select "Find"
+- In the empty field under "Name", type in the username of the account that wants their account disabled. Then click "Find now"
+- Right click the found user and click "Disable Account"
+</p>
+<p>
+<img src="https://i.imgur.com/2mu121O.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Verify that the account has been disabled by attempting to log into your "client-1" virtual machine with it. If it's disabled you will get the message displayed below.
+</p>
+<p>
+<img src="https://i.imgur.com/uyQtbDg.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+
+- Now that the account is locked, we will observe the logs for suspicious activity
+- In the search bar at the bottom, search for "eventvwr.msc"
+- Once it's open, expand "Windows Logs" then click "Security"
+- Observe the logs and you will find some "Audit Failures"
+  - If you look at the details for some of the logs, you will find that these particular audit failures are failed login attempts from when we attempted to login with user's account from earlier 
+</p>
+<p>
+<img src="https://i.imgur.com/QU97DCy.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+<p></p>
+<br />
+
+<h3>Congratulations! That's the end of this tutorial.</h3>
